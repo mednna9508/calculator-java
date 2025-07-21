@@ -1,30 +1,48 @@
 package calculator;
 
-import java.util.Stack;
+import java.util.Scanner;
 
 public class Calculator {
-    public static double calculate(String expression) {
-        char[] tokens = expression.toCharArray();
 
-        Stack<Double> values = new Stack<>();
-        Stack<Character> ops = new Stack<>();
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i] == ' ')
-                continue;
+        System.out.print("Unesi prvi broj: ");
+        double broj1 = scanner.nextDouble();
 
-            if (tokens[i] >= '0' && tokens[i] <= '9') {
-                StringBuilder sbuf = new StringBuilder();
-                while (i < tokens.length && (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.'))
-                    sbuf.append(tokens[i++]);
-                values.push(Double.parseDouble(sbuf.toString()));
-                i--;
-            } else if (tokens[i] == '(') {
-                ops.push(tokens[i]);
-            } else if (tokens[i] == ')') {
-                while (ops.peek() != '(')
-                    values.push(applyOp(ops.pop(), values.pop(), values.pop()));
+        System.out.print("Unesi operaciju (+, -, *, /): ");
+        char operacija = scanner.next().charAt(0);
 
- 
+        System.out.print("Unesi drugi broj: ");
+        double broj2 = scanner.nextDouble();
 
-       
+        double rezultat;
+
+        switch (operacija) {
+            case '+':
+                rezultat = broj1 + broj2;
+                break;
+            case '-':
+                rezultat = broj1 - broj2;
+                break;
+            case '*':
+                rezultat = broj1 * broj2;
+                break;
+            case '/':
+                if (broj2 != 0) {
+                    rezultat = broj1 / broj2;
+                } else {
+                    System.out.println("Greška: Deljenje nulom nije dozvoljeno.");
+                    return;
+                }
+                break;
+            default:
+                System.out.println("Nepoznata operacija.");
+                return;
+        }
+
+        System.out.println("Rezultat: " + rezultat);
+    }
+}
+
+
